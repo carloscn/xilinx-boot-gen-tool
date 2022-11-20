@@ -78,7 +78,7 @@ void ZynqMpAuthenticationContext::CopyPartitionSignature(BootImage& bi,
     /* Update with Partition */
     memcpy(partitionAc, (*section)->Data + (authblocksize * acIndex), hashSecLen);
 
-    /* Update with authentication certificate except the last 256 bytes, which is the partition signature, 
+    /* Update with authentication certificate except the last 256 bytes, which is the partition signature,
        that we are calculating now. Once calculated, the partition signature will sit there */
     memcpy(partitionAc + hashSecLen, acSection->Data, acSection->Length - signatureLength);
 
@@ -215,7 +215,7 @@ ZynqMpAuthenticationContext::ZynqMpAuthenticationContext(const AuthCertificate40
     spkSignLoaded = true;
     bHsignature = new uint8_t[signatureLength];
     bhSignLoaded = true;
-    
+
     primaryKey = new Key4096("Primary Key");
     secondaryKey = new Key4096("Secondary Key");
     primaryKey->Import(&existingCert->acPpk, "Primary Key");
@@ -273,7 +273,7 @@ void ZynqMpAuthenticationContext::CreatePadding(uint8_t * signature, const uint8
 
         SHA3 PKCS#1v1.5 Padding
         LSB------------------------------------------------------MSB
-        0x0 || 0x1 || 0xFF(for 384 bytes) || 0x0 || tPad || SHA Hash 
+        0x0 || 0x1 || 0xFF(for 384 bytes) || 0x0 || tPad || SHA Hash
     */
 
     uint8_t tPadSha2[T_PAD_LENGTH] = { 0x30, 0x31, 0x30, 0x0D, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01,

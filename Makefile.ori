@@ -38,6 +38,9 @@ else
  CC	= gcc
 endif
 
+CUR_DIR        =        $(shell pwd)
+BUILD          =        $(CUR_DIR)/build
+
 OBJ = o
 CXXFLAGS ?= -std=c++0x -O -Wall -Wno-reorder -Wno-deprecated-declarations
 CFLAGS ?= -O -Wall
@@ -67,10 +70,10 @@ OBJECTS = $(addsuffix .o, $(basename $(wildcard *.cpp)))
 OBJECTS += $(addsuffix .o, $(basename $(wildcard *.c)))
 
 %.${OBJ} : %.cpp
-	${CXX} -c ${CXXFLAGS} $(OPTIONS) ${INCLUDE} $<
+	${CXX} -c ${CXXFLAGS} $(OPTIONS) ${INCLUDE} $< -o $(BUILD)/$@
 
 %.${OBJ} : %.c
-	${CC} -c ${CFLAGS} $(OPTIONS) ${INCLUDE} $<
+	${CC} -c ${CFLAGS} $(OPTIONS) ${INCLUDE} $< -o $(BUILD)/$@
 
 ${EXEC}: $(OBJECTS)
 	echo Building executable file: $@...
